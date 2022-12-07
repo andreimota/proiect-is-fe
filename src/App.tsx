@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import MainPage from "./view/MainPage";
+import RegisterPage from "./view/RegisterPage";
 
 function App() {
   return (
-    <MainPage />
+    <RegisterPage />
   );
 }
 

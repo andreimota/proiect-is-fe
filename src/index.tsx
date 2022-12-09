@@ -1,15 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RegisterPage from "./view/RegisterPage/RegisterPage";
+import NavBar from "./view/NavBar/NavBar";
+import { ThemeProvider } from "@emotion/react";
+import mainTheme from "./themes/mainTheme";
+import { CssBaseline } from "@mui/material";
+import PasswordRecoveryPage from "./view/PasswordRecoveryPage/PasswordRecoveryPage";
+import LoginPage from "./view/LoginPage/LoginPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const router = createBrowserRouter  ([
+  {
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/forgotPassword",
+    element: <PasswordRecoveryPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  }
+]);
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={mainTheme}>
+      <CssBaseline />
+      <NavBar />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

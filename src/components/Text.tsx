@@ -1,12 +1,18 @@
+import React, { ReactNode } from "react";
+
 import { Typography } from "@mui/material";
-import React from "react";
 
 interface TextProps {
-    text: string
+    children: ReactNode
 }
 
-const Text = ({text}: TextProps) => {
-  return <Typography>{text}</Typography>;
+const Text = ({
+  children,
+}: TextProps) => {
+  return; 
+  <Typography>
+    {children}
+  </Typography>;
 };
 
 export default Text;

@@ -1,0 +1,78 @@
+
+ /* Extra small devices (phones, 600px and down) */
+ @media only screen and (max-width: 992px) {
+    .registerField {
+        width: 20em;
+        height: 4em;
+    }
+
+    .registerForm {
+        margin-top: 12%;
+    }
+    
+    .registerText {
+        width: 80%;
+        margin-top: 10rem;
+    }
+    
+    .registerButton {
+        width: 23em;
+        height: 3em;
+    }
+
+    .title {
+        text-align: center;
+    }
+ }
+ 
+ /* Large devices (laptops/desktops, 992px and up) */
+ @media only screen and (min-width: 992px) {
+    .registerField {
+        width: 20em;
+        height: 4em;
+    }
+
+    .registerForm {
+        margin-top: 12%;
+    }
+
+    .registerText {
+        width: 80%;
+        margin-top: 10rem;
+    }
+    
+    .registerButton {
+        width: 23em;
+        height: 3em;
+    }
+
+    .title {
+        text-align: left;
+    }
+ }
+ 
+ /* Extra large devices (large laptops and desktops, 1200px and up) */
+ @media only screen and (min-width: 1200px) {
+    .registerField {
+        width: 20em;
+        height: 4em;
+    }
+
+    .registerForm {
+        margin-top: 12%;
+    }
+
+    .registerText {
+        width: 80%;
+        margin-top: 10rem;
+    }
+
+    .registerButton {
+        width: 23em;
+        height: 3em;
+    }
+
+    .title {
+        text-align: left;
+    }
+ } 

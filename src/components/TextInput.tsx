@@ -13,6 +13,7 @@ interface TextInputProps {
     inputProps?: object
     error?: boolean
     helperText?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | null | undefined
+    type?: string
 }
 
 const TextInput = ({
@@ -24,6 +25,7 @@ const TextInput = ({
   inputProps,
   error = false,
   helperText,
+  type,
 }: TextInputProps ) => {
   return <ThemeProvider theme={textFieldTheme}> 
     <TextField
@@ -36,6 +38,7 @@ const TextInput = ({
       inputProps={inputProps}
       error={error}
       helperText={helperText as string}
+      type={type}
     />
   </ThemeProvider>;
 };

@@ -20,20 +20,20 @@ const RegisterPage = () => {
     { key: "lastName", label: "Last Name", validation: { required: "Last name is required." }},
     { key: "username", label: "Username", validation: { required: "Username is required." }},
     { key: "email", label: "E-mail address", validation: { required: "E-mail is required." }},
-    { key: "password", label: "Password", validation: { 
+    { key: "password", type: "password", label: "Password", validation: { 
       required: "Password is required.",
       minLength: { value: 8, message: "Password must be at least 8 characters long." }
     }},
-    { key: "confirmPassword", label: "Confirm password", validation: { 
+    { key: "confirmPassword", type: "password", label: "Confirm password", validation: { 
       required: "First name is required.",
       validate: ( password: string ) => password === watch("password") ? true : "Passwords do not match",
     }},
   ];
 
   const handleFormSubmit = async ( data: FieldValues ) => {
-    const jwt = await api.post(data, "/user");
+    const jwt = await api.post(data, "/user/register");
 
-    localStorage.setItem("jwt", jwt);
+    localStorage.setItem("jwt", jwt?.data);
   };
 
   return <Container maxWidth="xl">
@@ -70,18 +70,14 @@ const RegisterPage = () => {
               inputProps={register(row.key, row.validation)}
               error={!!errors[row.key]}
               helperText={errors ? errors[row.key]?.message : null}
+              type={row.type}
             />
           </Grid>
         ))}
         <Grid item>
           <GenericButton onClick={handleSubmit((data) => handleFormSubmit(data))} className="registerButton">Register</GenericButton>
-          <Grid container direction="row" justifyItems="flex-end" sx={{ width: "20em", paddingTop: "0.7em"}}>
-            <Grid item xs={6} md={6}>
-              <Link to="/forgotPassword" style={{ color: "#F6AE2D", textDecoration: "none" }}>Forgot password?</Link>
-            </Grid>
-            <Grid item xs={6} md={6} sx={{ maxWidth: "5em"}}>
-              <Link to="/login" style={{ color: "#F6AE2D", textDecoration: "none", height: "3em", width: "1em" }}>Already have an account? Sign in</Link>
-            </Grid>
+          <Grid container direction="row" justifyContent="center" sx={{ width: "20em", paddingTop: "0.7em"}}>
+            <Link to="/login" style={{ color: "#F6AE2D", textDecoration: "none", textAlign: "center" }}>Already have an account? Sign in</Link>
           </Grid>
         </Grid>
       </Grid>

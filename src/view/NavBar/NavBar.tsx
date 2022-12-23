@@ -84,6 +84,7 @@ const NavBar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
+                backgroundColor: "primary",
               }}
             >
               {pages.map((page) => (

@@ -1,0 +1,40 @@
+.card {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
+}
+
+.title {
+  padding-top: 2rem;
+  padding-bottom: 5rem;
+}
+
+.filters {
+  background-color: "#0d0d0e";
+  border-radius: 25px;
+}
+
+.course-link {
+  font-size: 25px;
+  padding-bottom: 1rem;
+  color: white;
+  text-decoration: none;
+}
+
+.course-link:hover {
+  text-decoration: underline;
+  text-decoration-color: "#3F6AE2D";
+}
+
+.search-input {
+  width: 100%;
+}
+
+.accordions {
+  margin-top: 1rem;
+}
+
+.pagination {
+  margin: 1rem;
+}

@@ -5,8 +5,8 @@ import { SubmitHandler } from "react-hook-form";
 
 interface ButtonProps {
     onClick: ( e: MouseEvent<HTMLButtonElement> ) => void
-    children: ReactNode
-    className: string
+    children?: ReactNode
+    className?: string
 }
 
 const GenericButton = ({

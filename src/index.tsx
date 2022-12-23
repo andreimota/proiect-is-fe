@@ -1,15 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RegisterPage from "./view/RegisterPage/RegisterPage";
-import NavBar from "./view/NavBar/NavBar";
+
 import { ThemeProvider } from "@emotion/react";
-import mainTheme from "./themes/mainTheme";
 import { CssBaseline } from "@mui/material";
+
 import PasswordRecoveryPage from "./view/PasswordRecoveryPage/PasswordRecoveryPage";
 import LoginPage from "./view/LoginPage/LoginPage";
+import Articles from "./view/Courses/Articles";
+import RegisterPage from "./view/RegisterPage/RegisterPage";
+import NavBar from "./view/NavBar/NavBar";
+
+import mainTheme from "./themes/mainTheme";
+import "./index.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -27,6 +32,10 @@ const router = createBrowserRouter  ([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/courses",
+    element: <Articles />,
   }
 ]);
 

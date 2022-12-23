@@ -7,8 +7,30 @@ const mainTheme = createTheme({
       color: "#FFFFFF",
     }
   },
+  components: {
+    MuiMenu: {
+      styleOverrides: {
+        list: {
+          backgroundColor: "#111111",
+        }
+      }
+    },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#0d0d0e"
+        }
+      }
+    },
+    MuiPagination: {
+      styleOverrides: {
+        text: {
+          color: "#FFFFFF"
+        }
+      }
+    }
+  },
   palette: {
-    
     primary: {
       main: "#0d0d0e",
     },

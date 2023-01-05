@@ -31,6 +31,10 @@ const mainTheme = createTheme({
     }
   },
   palette: {
+    action: {
+      disabledBackground: "grey",
+      disabled: "white"
+    },
     primary: {
       main: "#0d0d0e",
     },

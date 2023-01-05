@@ -1,6 +1,5 @@
 .card {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   border-bottom: 1px solid grey;
   border-top: 1px solid grey;
 }
@@ -37,4 +36,12 @@
 
 .pagination {
   margin: 1rem;
+}
+
+.article {
+  margin-top: 5rem;
+}
+
+.paragraph {
+  margin-top: 3rem;
 }

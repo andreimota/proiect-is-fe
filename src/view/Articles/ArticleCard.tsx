@@ -2,13 +2,13 @@ import React from "react";
 
 import { Grid, Typography } from "@mui/material";
 
-import { Article } from "./CourseTypes";
+import { Course } from "./CourseTypes";
 
-import "./Courses.css";
+import "./Articles.css";
 import { Link } from "react-router-dom";
-
+ 
 interface CourseCardProps {
-  course: Article
+  course: Course
 }
 
 const ArticleCard = ({
@@ -22,7 +22,10 @@ const ArticleCard = ({
       <Grid container item direction="column" xs={9} md={9} columnSpacing={3}> {/* Content */}
         <Link to={`/course/${course.id}`} className="course-link">{course.title}</Link>
         <Typography paddingBottom="1rem">{course.description}</Typography>
-        <Typography>{course.technology}</Typography>
+        <Grid container direction="row">
+          <Typography fontWeight="bold" color="secondary">{course.technology}</Typography>
+          <Typography marginLeft="2rem" fontSize="16px" fontFamily="Frutiger" color="grey">{course.difficulty}</Typography>
+        </Grid>
       </Grid>
     </Grid>
   );

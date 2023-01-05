@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 
-import { TextField, ThemeProvider } from "@mui/material";
+import { SxProps, TextField, ThemeProvider } from "@mui/material";
 import textFieldTheme from "../themes/textFieldTheme";
 import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
@@ -14,6 +14,10 @@ interface TextInputProps {
     error?: boolean
     helperText?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | null | undefined
     type?: string
+    multiline?: boolean
+    disabled?: boolean
+    sx?: SxProps
+    rows?: number
 }
 
 const TextInput = ({
@@ -26,6 +30,10 @@ const TextInput = ({
   error = false,
   helperText,
   type,
+  multiline,
+  disabled,
+  sx,
+  rows
 }: TextInputProps ) => {
   return <ThemeProvider theme={textFieldTheme}> 
     <TextField
@@ -35,10 +43,17 @@ const TextInput = ({
       label={label}
       className={className}
       color="secondary"
-      inputProps={inputProps}
+      inputProps={{
+        ...inputProps,
+        spellCheck: false
+      }}
       error={error}
       helperText={helperText as string}
       type={type}
+      multiline={multiline}
+      disabled={disabled}
+      sx={sx}
+      rows={rows}
     />
   </ThemeProvider>;
 };

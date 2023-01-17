@@ -4,13 +4,15 @@ import { Author } from "../../types/User/User.types";
 export interface Course {
   id: number
   title: string
+  authorName: string
   description?: string
   technology: string
-  image: string
+  image: any
   difficulty: string
   publishedAt: string
+  
+  quizId: number
 
-  author: Author
   articles: Article[]
 }
 

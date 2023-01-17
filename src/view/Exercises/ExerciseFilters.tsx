@@ -5,12 +5,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import TextInput from "../../components/TextInput";
 
-import { Course } from "./CourseTypes";
+
 import stringHelpers from "../../common/stringHelpers";
+import { Exercise } from "./Exercises.types";
 
 interface CourseFiltersProps {
-  articles: Course[]
-  setFilteredArticles: Dispatch<SetStateAction<Course[]>>
+  exercises: Exercise[]
+  setFilteredExercises: Dispatch<SetStateAction<Exercise[]>>
 }
 
 interface Filter {
@@ -20,9 +21,9 @@ interface Filter {
 }
 
 const difficulties = ["beginner", "intermediate", "advanced"];
-const technologies = ["javascript", "c#", "python", "webassembly"];
+const technologies = ["python", "javascript"];
 
-const ArticleFilters = ({ articles, setFilteredArticles }: CourseFiltersProps) => {
+const ExerciseFilters = ({ exercises, setFilteredExercises }: CourseFiltersProps) => {
   const [filters, setFilters] = useState<Filter>({
     searchWord: "",
     difficultyFilters: difficulties,
@@ -52,14 +53,14 @@ const ArticleFilters = ({ articles, setFilteredArticles }: CourseFiltersProps) =
   };
 
   useEffect(() => {
-    const filteredArticles = articles
+    const filteredExercises = exercises
       .filter(item => 
         item.title.toLowerCase().includes(filters.searchWord) &&
         filters.difficultyFilters.includes(item.difficulty.toLowerCase()) &&
         filters.technologyFilters.includes(item.technology.toLowerCase())
       );
     console.log(filters);
-    setFilteredArticles(filteredArticles);
+    setFilteredExercises(filteredExercises);
   }, [filters, filters.difficultyFilters.length, filters.technologyFilters.length]);
 
   return (
@@ -111,4 +112,4 @@ const ArticleFilters = ({ articles, setFilteredArticles }: CourseFiltersProps) =
   );
 };
 
-export default ArticleFilters;
+export default ExerciseFilters;

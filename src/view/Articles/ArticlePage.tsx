@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+
 
 import { Box, CircularProgress, Container, Divider, Grid, Paper, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -21,6 +23,7 @@ const languagesByTechnology = {
 
 const ArticlePage = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   const [course, setCourse] = useState<Course>({} as Course);
 
@@ -49,17 +52,24 @@ const ArticlePage = () => {
   }, [currentArticleOrder, course]);
 
   useEffect(() => {
-    api
-      .get(`/course/${courseId}`)
-      .then(response => {
-        setCourse(response);
-        setLoading(false);
-      })
-      .catch(err => console.log(err));
+    if(loading === true) {
+      const { id }: any = jwtDecode(localStorage.getItem("jwt") as string);
+      api
+        .get(`/course/${courseId}/${id}`)
+        .then(response => {
+          setCourse(response);
+          setLoading(false);
+        })
+        .catch(err => console.log(err));
+    }
   }, []);
 
   const handleArticleChange = (change: number) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setCurrentArticleOrder(currentArticleOrder + change);
+  };
+
+  const handleQuizAttempt = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    navigate(`/quiz/${course.quizId}`);
   };
 
   return <>
@@ -74,27 +84,28 @@ const ArticlePage = () => {
             <Grid item xs={9} justifyContent="center" alignItems="center">
               <Typography variant="h2">{currentArticle?.title}</Typography>
             </Grid>
-            <Grid container item direction="row" xs={3} alignItems="center" justifyContent="flex-end">
-              <Grid container item xs={3}>
-                <Avatar alt={course?.author?.lastName} src="" />
-              </Grid>
-              <Grid container item direction="column" xs={5} marginTop="0.2rem">
-                <Typography fontSize="14px" color="secondary">{course?.author?.firstName + " " + course?.author?.lastName}</Typography>
-                <Typography fontSize="14px">{(new Date(course?.publishedAt)).toDateString()}</Typography>
-              </Grid>
+
+            <Grid container item direction="column" xs={5} marginTop="0.2rem">
+              <Typography fontSize="14px" color="secondary">{course?.authorName}</Typography>
+              <Typography fontSize="14px">{(new Date(course?.publishedAt)).toDateString()}</Typography>
             </Grid>
           </Grid>
           <Grid container direction="column" className="paragraph">
             {currentArticle?.paragraphs?.map(paragraph => (
-              <Grid container item key={paragraph.id}>
+              <Grid container item key={paragraph.id} marginTop="3rem">
                 <Typography>{paragraph.textSection}</Typography>
                 {paragraph.codeSection && <Compiler language={languagesByTechnology[course.technology as keyof typeof languagesByTechnology]} code={paragraph.codeSection}/>}
               </Grid>
             ))}
           </Grid>
-          <Grid container direction="row" alignItems="flex-end" justifyContent="space-between" marginTop="5rem"> {/* Navigation */}
+          <Grid container direction="row" alignItems="flex-end" justifyContent="space-between" marginTop="5rem" marginBottom="5rem"> {/* Navigation */}
             <GenericButton disabled={currentArticleOrder <= 1} onClick={handleArticleChange(-1)}>Previous Article</GenericButton>
-            <GenericButton disabled={currentArticleOrder > course?.articles?.length} onClick={handleArticleChange(+1)}>Next Article</GenericButton>
+            {
+              currentArticleOrder === course?.articles?.length ? 
+                (course?.quizId ? <GenericButton disabled={currentArticleOrder > course?.articles?.length} onClick={handleQuizAttempt}>Attempt Quiz</GenericButton> : <GenericButton disabled>No quiz available</GenericButton>)
+                :
+                <GenericButton disabled={currentArticleOrder > course?.articles?.length} onClick={handleArticleChange(+1)}>Next Article</GenericButton>
+            }
           </Grid>
         </>
       }

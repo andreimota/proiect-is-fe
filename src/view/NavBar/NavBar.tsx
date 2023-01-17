@@ -1,4 +1,7 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,38 +15,36 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import jwtDecode from "jwt-decode";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Courses", "Exercises", "Dashboard"];
 
 const NavBar = () => {
+  const jwt = localStorage.getItem("jwt");
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleLogOut = () => {
+    localStorage.removeItem("jwt");
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href={jwt ? "/dashboard" : "/login"}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -89,7 +90,14 @@ const NavBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" 
+                    component="a" 
+                    href={`/${page}`} 
+                    sx={{
+                      display: { md: "flex" },
+                      color: "inherit",
+                      textDecoration: "none",
+                    }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -115,44 +123,35 @@ const NavBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
+              <Typography
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                component="a"
+                href={`/${page.toLowerCase()}`}
+                sx={{
+                  ml: 4,
+                  display: { xs: "flex" },
+                  textDecoration: "none",
+                }}
               >
                 {page}
-              </Button>
+              </Typography>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+          <Box sx={{ flexGrow: 0, display: "flex", flex: "inline" }}>
+            {jwt && <Typography textAlign="center" 
+              component="a"
+              href={"/"} 
+              onClick={handleLogOut}
+              sx={{
+                display: { md: "flex" },
+                color: "inherit",
+                textDecoration: "none",
+              }}>LOG OUT</Typography>
+            }
+            <IconButton sx={{ p: 0 }}>
+              <Avatar alt="Andrei Mota" src="/static/images/avatar/2.jpg" />
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>

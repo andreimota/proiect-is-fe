@@ -6,16 +6,25 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { ThemeProvider } from "@emotion/react";
 import { Container, CssBaseline } from "@mui/material";
+import { ToastContainer } from "react-toastify";
 
 import PasswordRecoveryPage from "./view/PasswordRecoveryPage/PasswordRecoveryPage";
 import LoginPage from "./view/LoginPage/LoginPage";
 import Articles from "./view/Articles/Articles";
 import RegisterPage from "./view/RegisterPage/RegisterPage";
+import ArticlePage from "./view/Articles/ArticlePage";
+import QuizPage from "./view/Quizzes/QuizPage";
+import Exercises from "./view/Exercises/Exercises";
+
 import NavBar from "./view/NavBar/NavBar";
 
 import mainTheme from "./themes/mainTheme";
 import "./index.css";
-import ArticlePage from "./view/Articles/ArticlePage";
+import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ExercisePage from "./view/Exercises/ExercisePage";
+import Dashboard from "./view/Dashboard/Dashboard";
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -31,30 +40,51 @@ const router = createBrowserRouter  ([
     element: <PasswordRecoveryPage />,
   },
   {
-    path: "/login",
+    index: true,
     element: <LoginPage />,
   },
   {
+    path: "/dashboard",
+    element: <ProtectedRoute component={<Dashboard />} />,
+  },
+  {
     path: "/courses",
-    element: <Articles />,
+    element: <ProtectedRoute component={<Articles />} />,
+  },
+  {
+    path: "/exercises",
+    element: <ProtectedRoute component={<Exercises />} />,
   },
   {
     path: "/course/:courseId",
-    element: <ArticlePage />,
+    element: <ProtectedRoute component={<ArticlePage />} />,
+  },
+  {
+    path: "/quiz/:quizId",
+    element: <ProtectedRoute component={<QuizPage />} />,
+  },
+  {
+    path: "/exercise/:exerciseId",
+    element: <ProtectedRoute component={<ExercisePage />} />,
   }
 ]);
 
 root.render(
-  <React.StrictMode>
+  <>
     <ThemeProvider theme={mainTheme}>
       <NavBar />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{marginTop: "7rem"}}>
         <CssBaseline />
         
         <RouterProvider router={router} />
       </Container>
     </ThemeProvider>
-  </React.StrictMode>
+    <ToastContainer 
+      theme="dark"
+      position="bottom-right"
+    />
+  </>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Grid, Typography } from "@mui/material";
 
 import TextInput from "../../components/TextInput";
@@ -9,6 +9,7 @@ import GenericButton from "../../components/GenericButton";
 import "./LoginPage.css";
 
 import api from "../../api/api";
+import { toast } from "react-toastify";
 
 
 interface Credentials {
@@ -18,6 +19,12 @@ interface Credentials {
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState<Credentials>({} as Credentials);
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+
+    if(jwt) useNavigate()("/dashboard");
+  }, []);
 
   const handleCredentialsChange = ( {target}: ChangeEvent<HTMLInputElement> ) => {
     setCredentials({
@@ -30,9 +37,14 @@ const LoginPage = () => {
     try {
       const response = await api.post(data, "/user/login");
 
-      localStorage.setItem("jwt", response.data);
+      localStorage.setItem("jwt", response);
+
+      useNavigate()("/dashboard");
     } catch ( e: any ) {
-      console.log( e.response.data );
+      toast( "Invalid username or password.", {
+        hideProgressBar: true,
+        type: "error",
+      } );
     }
   };
 

@@ -11,8 +11,10 @@ import { Container } from "@mui/system";
 
 import api from "../../api/api";
 import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: {errors}, watch } = useForm();
 
   const registerFormKeys = [
@@ -33,7 +35,13 @@ const RegisterPage = () => {
   const handleFormSubmit = async ( data: FieldValues ) => {
     const jwt = await api.post(data, "/user/register");
 
-    localStorage.setItem("jwt", jwt?.data);
+    toast("Successfully registered!", {
+      type: "success"
+    });
+
+    localStorage.setItem("jwt", jwt);
+
+    navigate("/dashboard");
   };
 
   return <Container maxWidth="xl">

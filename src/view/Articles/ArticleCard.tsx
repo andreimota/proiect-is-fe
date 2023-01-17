@@ -17,7 +17,7 @@ const ArticleCard = ({
   return (
     <Grid container direction="row" className="card">
       <Grid item xs={3} md={3}> {/* Image */}
-        <img src="./react.jpg"></img>
+        <img src={`data:image/jpeg;base64,${course.image}`}></img>
       </Grid>
       <Grid container item direction="column" xs={9} md={9} columnSpacing={3}> {/* Content */}
         <Link to={`/course/${course.id}`} className="course-link">{course.title}</Link>
